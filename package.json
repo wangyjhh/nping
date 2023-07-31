@@ -1,8 +1,8 @@
 {
 	"name": "nping",
-	"version": "1.0.1",
+	"version": "1.0.6",
 	"description": "",
-	"main": "index.js",
+	"main": "./dist/src/main.js",
 	"scripts": {
 		"dev": "npx tsc && npm link",
 		"unl": "npm unlink nping --global",
@@ -19,7 +19,7 @@
 	"files": [
 		"dist"
 	],
-	"license": "ISC",
+	"license": "MIT",
 	"devDependencies": {
 		"@types/node": "^20.4.5",
 		"tsx": "^3.12.7",

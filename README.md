@@ -1,44 +1,48 @@
 # Node_Ping
 
-## 部署
-
-下载项目依赖
-
-```
-npm i
-```
+>nping命令基于windows原版ping命令，进行二次封装，除支持原ping命令部分功能外，还默认支持将命令行的输出打印日志到桌面的 `nping_log.txt` 文件，通过 `-f` 选项可关闭日志功能 。
 
 ## 安装
-
-添加命令到全局`npm`包，在项目根目录下使用以下命令
-
 ```bash
-npm link
+# npm
+npm i nping -g
+
+# pnpm
+pnpm add nping -g
+
 ```
 
-## 卸载
 
-从全局`npm`包中删除命令，控制台中输入以下命令
-
-```bash
-npm unlink node_ping --global
-```
 
 ## 使用
 
 ```bash
-nping ip地址/域名
+Usage: nping [options] [ip]
+
+nping工具
+
+Arguments:
+  ip                     IP地址/域名
+
+Options:
+  -f, --nolog            不保存日志文件
+  -a, --address          将地址解析为主机名
+  -n, --count <number>   设置ping包个数
+  -l, --length <number>  设置ping包的大小
+  -w, --wait <number>    设置超时时间
+  -v,--version           输出版本号
+  -h, --help             display help for command
 ```
-
-## 说明
-
-本项目作用与常规`ping`命令一样，但本项目只有长`ping`模式，同时每条`ping`记录控制台输出时有时间戳，使用`nping`命令后，桌面会生成`log.txt`文件对此次ping操作进行日志记录。
 
 ## 截图
 
-![img1](./images/img1.jpg)
+![nping1](https://yujiehh.top/nping1.png)
 
-![img2](./images/img2.jpg)
+![nping2](https://yujiehh.top/nping2.png)
+
+![nping3](https://yujiehh.top/nping3.png)
+
+![nping4](https://yujiehh.top/nping4.png)
 
 ## 备注
 
