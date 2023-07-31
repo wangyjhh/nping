@@ -17,7 +17,7 @@ const program = new Command()
 program
 	.name("nping")
 	.description("nping工具")
-	.option("-f, --nolog", "将地址解析为主机名")
+	.option("-f, --nolog", "不保存日志文件")
 	.option("-a, --address", "将地址解析为主机名")
 	.option("-n, --count <number>", "设置ping包个数")
 	.option("-l, --length <number>", "设置ping包的大小")
