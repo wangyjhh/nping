@@ -1,7 +1,7 @@
 {
 	"name": "nping",
 	"version": "1.0.6",
-	"description": "",
+	"description": "基于ping命令的nping命令",
 	"main": "./dist/src/main.js",
 	"scripts": {
 		"dev": "npx tsc && npm link",
@@ -11,6 +11,10 @@
 	},
 	"bin": {
 		"nping": "./dist/src/main.js"
+	},
+	"repository": {
+		"url": "https://github.com/wangyjhh/nping.git",
+		"type": "git"
 	},
 	"keywords": [
 		"ping"
