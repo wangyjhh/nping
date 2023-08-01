@@ -47,40 +47,54 @@ program
 					params.push("-w", options.wait)
 				}
 
-				ping = spawn("ping", params)
+				// let ping = spawn("ping", params)
+
+				ping = spawn("ping", params, {
+					cwd: process.cwd(),
+					stdio: "pipe", // 使用 pipe 方式处理输出
+				})
+
+				let strBuffer = "" // 用于缓存输出内容
 
 				ping.stdout.on("data", (data: any) => {
-					let str = iconv.decode(data, "gbk").trimStart()
-					const reg =
-						/(?:来自\s(?:\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}|[\w.-]+)\s的回复:\s字节=\d+\s时间[<=>]\d+ms\sTTL=\d+)|(?:来自\s(?:\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}|[\w.-]+)\s的回复:\s无法访问目标主机。)|(?:PING：传输失败。常见故障。)|(?:请求超时。)/g
-					let ping_str = str.match(reg) === null ? "" : str.match(reg)![0]
-					let ping_end = str.split(reg).filter((item) => item !== "" && item !== "\r\n")[0]
-						? str
-								.split(reg)
-								.filter((item) => item !== "" && item !== "\r\n")[0]
-								.trimStart()
-						: str.split(reg).filter((item) => item !== "" && item !== "\r\n")[0]
+					strBuffer += iconv.decode(data, "gbk")
+					const lines = strBuffer.split(/[\r\n]+/) // 根据换行符对输出进行断句
+					strBuffer = lines.pop()! // 保留最后一行，可能是不完整的
 
-					if (!options.nolog) {
-						if (ping_str !== "") {
-							fs.appendFileSync(path.join(os.homedir(), "/Desktop/nping_log.txt"), formatOutput("success", ping_str, getCurrentTime()))
-						}
-						if (ping_end) {
-							fs.appendFileSync(path.join(os.homedir(), "/Desktop/nping_log.txt"), formatOutput("success", ping_end))
-						}
-					} else {
-						if (ping_str) {
-							formatOutput("success", ping_str, getCurrentTime())
-						}
-						if (ping_end) {
-							formatOutput("success", ping_end)
+					for (const line of lines) {
+						// 在这里处理完整的输出内容
+						const reg =
+							/(?:来自\s(?:\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}|[\w.-]+)\s的回复:\s字节=\d+\s时间[<=>]\d+ms\sTTL=\d+)|(?:来自\s(?:\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}|[\w.-]+)\s的回复:\s无法访问目标主机。)|(?:来自\s(?:\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}|[\w.-]+)\s的回复:\sTTL 传输中过期。)|(?:PING：传输失败。常见故障。)|(?:请求超时。)/g
+
+						let ping_str = line.match(reg) === null ? "" : line.match(reg)![0]
+						let ping_end = line.split(reg).filter((item) => item !== "" && item !== "\r\n")[0]
+							? line
+									.split(reg)
+									.filter((item) => item !== "" && item !== "\r\n")[0]
+									.trimStart()
+							: line.split(reg).filter((item) => item !== "" && item !== "\r\n")[0]
+
+						if (!options.nolog) {
+							if (ping_str !== "") {
+								fs.appendFileSync(
+									path.join(os.homedir(), "/Desktop/nping_log.txt"),
+									formatOutput("success", ping_str, getCurrentTime())
+								)
+							}
+							if (ping_end) {
+								fs.appendFileSync(path.join(os.homedir(), "/Desktop/nping_log.txt"), formatOutput("success", ping_end))
+							}
+						} else {
+							if (ping_str) {
+								formatOutput("success", ping_str, getCurrentTime())
+							}
+							if (ping_end) {
+								formatOutput("success", ping_end)
+							}
 						}
 					}
 				})
 
-				ping.stdout.on("error", (chunk: any) => {
-					console.log(chunk)
-				})
 				ping.stdout.on("end", () => {
 					fs.appendFileSync(path.join(os.homedir(), "/Desktop/nping_log.txt"), "\r\n\r\n\r\n")
 				})

@@ -13,19 +13,19 @@ export const formatOutput = (type: "success" | "error" | "warning", out: string,
 				console.log(chalk.yellow(` ${out.trimEnd()} `))
 				break
 		}
-		return `${out}`
+		return `\r\n${out}`
 	} else {
 		switch (type) {
 			case "success":
-				console.log(chalk.bgGreen.white(` ${title} `), chalk.green(` ${out} `), "\r\n")
+				console.log("\r\n", chalk.bgGreen.white(` ${title} `), chalk.green(` ${out} `))
 				break
 			case "error":
-				console.log(chalk.bgRed.white(` ${title} `), chalk.red(` ${out} `), "\r\n")
+				console.log("\r\n", chalk.bgRed.white(` ${title} `), chalk.red(` ${out} `))
 				break
 			case "warning":
-				console.log(chalk.bgYellow.white(` ${title} `), chalk.yellow(` ${out} `), "\r\n")
+				console.log("\r\n", chalk.bgYellow.white(` ${title} `), chalk.yellow(` ${out} `))
 				break
 		}
-		return `${title} ${out}\r\n`
+		return `\r\n${title} ${out}`
 	}
 }
