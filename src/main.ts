@@ -34,17 +34,17 @@ program
 			} else {
 				let params = [`${ip}`]
 				if (options.count) {
-					params.push("-n", options.count)
+					params.unshift("-n", options.count)
 				} else {
-					params.push("-t")
+					params.unshift("-t")
 				}
 
 				if (options.length) {
-					params.push("-l", options.length)
+					params.unshift("-l", options.length)
 				} else if (options.address) {
-					params.push("-a")
+					params.unshift("-a")
 				} else if (options.wait) {
-					params.push("-w", options.wait)
+					params.unshift("-w", options.wait)
 				}
 
 				// let ping = spawn("ping", params)

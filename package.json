@@ -1,6 +1,6 @@
 {
 	"name": "nping",
-	"version": "1.0.7",
+	"version": "1.0.8",
 	"description": "基于ping命令的nping命令",
 	"main": "./dist/src/main.js",
 	"scripts": {
